@@ -1,109 +1,67 @@
 import 'package:flutter/material.dart';
+import 'quote.dart';
 
 void main() => runApp(MaterialApp(
-  home: ProfileCard(),
+  home: QuoteList(),
 ));
 
-class ProfileCard extends StatefulWidget {
+class QuoteList extends StatefulWidget {
   @override
-  _ProfileCardState createState() => _ProfileCardState();
+  _QuoteListState createState() => _QuoteListState();
 }
 
-class _ProfileCardState extends State<ProfileCard> {
+class _QuoteListState extends State<QuoteList> {
 
-  int profileLevel = 0;
+  List<Quote> quotes = [
+    Quote(author: 'Soren', text: 'Fuck this shite'),
+    Quote(author: 'Peter', text: 'Arsenal fc'),
+    Quote(author: 'Julie', text: 'What do we think of tottenham?'),
+  ];
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[900],
-      appBar: AppBar(
-        title: Text('Profile ID Card'),
-        centerTitle: true,
-        backgroundColor: Colors.grey[850],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            profileLevel += 1;
-          });
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.grey[800],
-      ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(30, 40, 30, 0),
+  Widget quoteTemplate(quote) {
+    return Card(
+      margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Center(
-              child: CircleAvatar(
-                backgroundImage: AssetImage('assets/profile-img.png'),
-                radius: 40.0,
-              ),
-            ),
-            Divider(
-              height: 90.0,
-              color: Colors.grey[800],
-            ),
             Text(
-              'NAME',
+              quote.text,
               style: TextStyle(
-                color: Colors.grey,
-                letterSpacing: 2.0,
-                fontSize: 20,
-              ),
+                fontSize: 18,
+                color: Colors.grey[600]
+              )
             ),
-            SizedBox(height: 10.0,),
+            SizedBox(height: 6),
             Text(
-              'Soren',
+              quote.author,
               style: TextStyle(
-              color: Colors.amberAccent[200],
-              letterSpacing: 2.0,
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
+                fontSize: 14,
+                color: Colors.grey[800]
               ),
-            ),
-            SizedBox(height: 10.0,),
-            Text(
-              'Current player Level',
-              style: TextStyle(
-              color: Colors.grey,
-              letterSpacing: 2.0,
-              fontSize: 20,
-              ),
-            ),
-            SizedBox(height: 10.0,),
-            Text(
-              '$profileLevel',
-              style: TextStyle(
-                color: Colors.amberAccent[200],
-                letterSpacing: 2.0,
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 30.0,),
-            Row(
-              children: <Widget>[
-                Icon(
-                  Icons.email,
-                  color: Colors.grey[400],
-                ),
-                SizedBox(width: 10.0),
-                Text(
-                  'Soren@gmail.com',
-                  style: TextStyle(
-                    color: Colors.grey[400],
-                    fontSize: 18.0,
-                    letterSpacing: 1.0,
-                  ),
-                )
-              ],
-            ),
+            )
           ],
         ),
       ),
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey[200],
+      appBar: AppBar(
+        title: Text('Awesome Quotes'),
+        centerTitle: true,
+        backgroundColor: Colors.redAccent,
+      ),
+      body: Column(
+        children: quotes.map((quote) => quoteTemplate(quote)).toList(),
+      ),
+    );
+  }
 }
+
+
+
